@@ -1,0 +1,33 @@
+<div class="bg-red-500">
+  <div class="bg-white shadow-md w-full flex flex-row justify-between items-center">
+    <div class="w-fit h-full flex justify-center items-center px-5 cursor-pointer">
+      <i class="fa-solid fa-bars text-[25px] text-primary"></i>
+    </div>
+
+    <div class="w-max flex flex-row items-center h-full">
+      <i class="fa-regular fa-user text-[#005EBF] text-[18px] mr-2"></i>
+      <div class="w-max flex flex-row items-center h-full pr-3 mr-5 cursor-pointer py-4" nz-dropdown
+        [nzDropdownMenu]="menu" nzTrigger="click">
+        <nz-dropdown-menu #menu="nzDropdownMenu">
+          <ul nz-menu>
+            <li nz-menu-item
+              class="flex px-4 py-2 font-medium border-l-[3px] border-solid hover:border-[#005EBF] border-white">Dashboard</li>
+            <li nz-menu-item
+              class="flex px-4 py-2 font-medium border-l-[3px] border-solid hover:border-[#005EBF] border-white">Profile</li>
+            <li nz-menu-item
+              class="flex px-4 py-2 font-medium border-l-[3px] border-solid hover:border-[#005EBF] border-white">Data Sensors</li>
+            <li nz-menu-item
+              class="flex px-4 py-2 font-medium border-l-[3px] border-solid hover:border-[#005EBF] border-white">Action History</li>
+          </ul>
+        </nz-dropdown-menu>
+        <span class="text-[#0071AF]">
+          Tung
+          <i class="fa-solid fa-angle-down ml-[10px]"></i>
+        </span>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="py-6 px-12">
+  <router-outlet></router-outlet>
+</div>
