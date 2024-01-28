@@ -13,6 +13,13 @@ export const MAIN_ROUTES: Routes = [
             (m) => m.DASHBOARD_ROUTES
           ),
       },
+      {
+        path: 'profile',
+        loadChildren: () =>
+          import('../../features/profile/profile.routes').then(
+            (m) => m.PROFILE_ROUTES
+          ),
+      },
     ],
   },
 ];

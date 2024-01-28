@@ -10,9 +10,9 @@
         [nzDropdownMenu]="menu" nzTrigger="click">
         <nz-dropdown-menu #menu="nzDropdownMenu">
           <ul nz-menu>
-            <li nz-menu-item
+            <li [routerLink]="['/dashboard']" nz-menu-item
               class="flex px-4 py-2 font-medium border-l-[3px] border-solid hover:border-[#005EBF] border-white">Dashboard</li>
-            <li nz-menu-item
+            <li [routerLink]="['/profile']" nz-menu-item
               class="flex px-4 py-2 font-medium border-l-[3px] border-solid hover:border-[#005EBF] border-white">Profile</li>
             <li nz-menu-item
               class="flex px-4 py-2 font-medium border-l-[3px] border-solid hover:border-[#005EBF] border-white">Data Sensors</li>
