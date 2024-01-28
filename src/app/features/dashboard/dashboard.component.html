@@ -1,36 +1,51 @@
-<section>
+<section class="py-6 px-12" [ngClass]="(temperature > 40 ? 'bg-red-600' : 'bg-[#f5f5f5]')">
   <div class="flex gap-6 mb-6">
-    <div class="bg-red-100 w-full p-6 h-[25vh]">
-      <div class="flex justify-end"><i class="fa-solid fa-temperature-high text-[30px]"></i></div>
+    <div class="shadow-xl border-[1px] bg-white border-[#f5f5f5] w-full p-6 h-[25vh]">
+      <div class="flex justify-end"><i class="fa-solid fa-temperature-high text-[30px] text-red-400"></i></div>
       <p class="text-center text-lg font-semibold">20 độ C</p>
       <p class="text-center text-xl font-semibold">Nhiệt độ</p>
     </div>
-    <div class="bg-red-100 w-full p-6 h-[25vh]">
-      <div class="flex justify-end"><i class="fa-solid fa-cloud text-[30px]"></i></div>
+    <div class="shadow-xl border-[1px] bg-white border-[#f5f5f5]  w-full p-6 h-[25vh]">
+      <div class="flex justify-end"><i class="fa-solid fa-cloud text-[30px] text-blue-400"></i></div>
       <p class="text-center text-lg font-semibold">80 %</p>
       <p class="text-center text-xl font-semibold">Độ ẩm</p>
     </div>
-    <div class="bg-red-100 w-full p-6 h-[25vh]">
-      <div class="flex justify-end"><i class="fa-regular fa-sun text-[30px]"></i></div>
+    <div class="shadow-xl border-[1px] bg-white border-[#f5f5f5]  w-full p-6 h-[25vh]">
+      <div class="flex justify-end"><i class="fa-regular fa-sun text-[30px] text-yellow-400"></i></div>
       <p class="text-center text-lg font-semibold">100 lux</p>
       <p class="text-center text-xl font-semibold">Ánh sáng</p>
     </div>
   </div>
   <div class="flex gap-6">
-    <div class="w-[68.5%]">
+    <div class="w-[68.5%] bg-white">
       <div class="w-[85%] ml-[60px]">
         <canvas id="lineChart"></canvas>
       </div>
     </div>
     <div class="w-1/3 flex-col">
-      <div class="shadow-xl border-[1px] border-[#f5f5f5] w-full p-6 mb-6 h-[25vh]">
-        <!-- <img class="w-[70px] mx-auto" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ_Pdn6Ueoc708MBYGQdy9bZY-kaRB98yXp7V8EZimx2ltgNs8J3M75J7aBcKVanjSgk54&usqp=CAU" alt=""> -->
-        <img class="w-[70px] mx-auto mt-4" src="https://usagif.com/wp-content/uploads/2022/fzk5d/fan-gif-74-minimalistic-blue-fan.gif" alt="">
-        <p class="text-center text-xl font-semibold">Bật</p>
+      <div class="shadow-xl border-[1px] bg-white border-[#f5f5f5] w-full p-6 mb-6 h-[25vh]">
+        <img *ngIf="isFanOn === false" class="w-[70px] mx-auto mt-4"
+          src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ_Pdn6Ueoc708MBYGQdy9bZY-kaRB98yXp7V8EZimx2ltgNs8J3M75J7aBcKVanjSgk54&usqp=CAU"
+          alt="">
+        <img *ngIf="isFanOn === true" class="w-[70px] mx-auto mt-4"
+          src="https://usagif.com/wp-content/uploads/2022/fzk5d/fan-gif-74-minimalistic-blue-fan.gif" alt="">
+        <div class="flex justify-center mt-3">
+          <button *ngIf="isFanOn === false" (click)="toggleFan()" nz-button nzType="primary" class="px-7">Bật</button>
+          <button *ngIf="isFanOn === true" (click)="toggleFan()" nz-button nzType="primary" nzDanger
+            class="px-7">Tắt</button>
+        </div>
       </div>
-      <div class="bg-red-100 w-full p-6 h-[25vh]">
-        <div class="flex justify-center"><i class="fa-solid fa-lightbulb text-[60px] mt-4"></i></div>
-        <p class="text-center text-xl font-semibold">Bật</p>
+      <div class="shadow-xl border-[1px] bg-white border-[#f5f5f5] w-full p-6 h-[25vh]">
+        <div *ngIf="isLightOn === false" class="flex justify-center"><i
+            class="fa-solid fa-lightbulb text-[60px] mt-4"></i></div>
+        <div *ngIf="isLightOn === true" class="flex justify-center"><i
+            class="fa-solid fa-lightbulb text-[60px] mt-4 text-yellow-500"></i></div>
+        <div class="flex justify-center mt-3">
+          <button *ngIf="isLightOn === false" (click)="toggleLight()" nz-button nzType="primary"
+            class="px-7">Bật</button>
+          <button *ngIf="isLightOn === true" (click)="toggleLight()" nz-button nzType="primary" nzDanger
+            class="px-7">Tắt</button>
+        </div>
       </div>
     </div>
   </div>

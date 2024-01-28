@@ -20,6 +20,20 @@ export const MAIN_ROUTES: Routes = [
             (m) => m.PROFILE_ROUTES
           ),
       },
+      {
+        path: 'action-history',
+        loadChildren: () =>
+          import('../../features/action-history/action-history.routes').then(
+            (m) => m.ACTION_HISTORY_ROUTES
+          ),
+      },
+      {
+        path: 'data-sensor',
+        loadChildren: () =>
+          import('../../features/data-sensor/data-sensor.routes').then(
+            (m) => m.DATA_SENSOR_ROUTES
+          ),
+      },
     ],
   },
 ];

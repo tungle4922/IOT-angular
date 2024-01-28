@@ -14,9 +14,9 @@
               class="flex px-4 py-2 font-medium border-l-[3px] border-solid hover:border-[#005EBF] border-white">Dashboard</li>
             <li [routerLink]="['/profile']" nz-menu-item
               class="flex px-4 py-2 font-medium border-l-[3px] border-solid hover:border-[#005EBF] border-white">Profile</li>
-            <li nz-menu-item
+            <li [routerLink]="['/data-sensor']" nz-menu-item
               class="flex px-4 py-2 font-medium border-l-[3px] border-solid hover:border-[#005EBF] border-white">Data Sensors</li>
-            <li nz-menu-item
+            <li [routerLink]="['/action-history']" nz-menu-item
               class="flex px-4 py-2 font-medium border-l-[3px] border-solid hover:border-[#005EBF] border-white">Action History</li>
           </ul>
         </nz-dropdown-menu>
@@ -28,6 +28,6 @@
     </div>
   </div>
 </div>
-<div class="py-6 px-12">
+<div>
   <router-outlet></router-outlet>
 </div>
