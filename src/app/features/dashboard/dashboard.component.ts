@@ -26,14 +26,22 @@ export class DashboardComponent {
     this.chart = new Chart('lineChart', {
       type: 'line',
       data: {
-        labels: labelArray,
+        labels: [10, 20, 30, 40, 50, 60],
         datasets: [
           {
-            label: 'Thông số',
-            data: quantityArray,
-            borderColor: '#0EAF8F',
+            label: 'Nhiệt độ',
+            data: [40, 35, 38, 32, 35, 40],
             fill: false,
-            pointBackgroundColor: '#0EAF8F',
+          },
+          {
+            label: 'Độ ẩm',
+            data: [40, 42, 45, 46, 51, 53],
+            fill: false,
+          },
+          {
+            label: 'Ánh sáng',
+            data: [69, 50, 60, 40, 50, 70],
+            fill: false,
           },
         ],
       },

@@ -1,11 +1,13 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { RouterModule } from '@angular/router';
+import { NzPaginationModule } from 'ng-zorro-antd/pagination';
+
 
 @Component({
   selector: 'app-data-sensor',
   standalone: true,
-  imports: [CommonModule, RouterModule],
+  imports: [CommonModule, RouterModule, NzPaginationModule],
   templateUrl: './data-sensor.component.html',
   styleUrls: ['./data-sensor.component.scss'],
 })

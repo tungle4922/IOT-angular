@@ -1,11 +1,12 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { RouterModule } from '@angular/router';
+import { NzPaginationModule } from 'ng-zorro-antd/pagination';
 
 @Component({
   selector: 'app-action-history',
   standalone: true,
-  imports: [CommonModule, RouterModule],
+  imports: [CommonModule, RouterModule, NzPaginationModule],
   templateUrl: './action-history.component.html',
   styleUrls: ['./action-history.component.scss'],
 })
