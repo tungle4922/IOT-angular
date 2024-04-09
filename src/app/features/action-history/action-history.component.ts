@@ -2,11 +2,13 @@ import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { NzPaginationModule } from 'ng-zorro-antd/pagination';
-
+import { SortTableComponent } from '../../shared/components/sort-table/sort-table.component';
+import { IColumnSort } from '../../core/models/SortTable';
+import { IGetAllHistoryRes } from '../../core/models/ActionHistory';
 @Component({
   selector: 'app-action-history',
   standalone: true,
-  imports: [CommonModule, RouterModule, NzPaginationModule],
+  imports: [CommonModule, RouterModule, NzPaginationModule, SortTableComponent],
   templateUrl: './action-history.component.html',
   styleUrls: ['./action-history.component.scss'],
 })
@@ -36,6 +38,161 @@ export class ActionHistoryComponent {
       id: 5,
       action: 'Thao tác bật đèn',
       createdDate: '16/09/2024',
+    },
+  ];
+  listOfColumn: IColumnSort[] = [
+    {
+      title: 'Tên thiết bị',
+      compare: (a: IGetAllHistoryRes, b: IGetAllHistoryRes) =>
+        a.device.localeCompare(b.device),
+      priority: false,
+    },
+    {
+      title: 'Hành động',
+      compare: (a: IGetAllHistoryRes, b: IGetAllHistoryRes) =>
+        a.action.localeCompare(b.action),
+      priority: false,
+    },
+    {
+      title: 'Ngày tạo',
+      compare: (a: IGetAllHistoryRes, b: IGetAllHistoryRes) =>
+        a.createdDate.localeCompare(b.createdDate),
+      priority: false,
+    },
+    {
+      title: 'Ngày cập nhật',
+      compare: (a: IGetAllHistoryRes, b: IGetAllHistoryRes) =>
+        a.lastmodifiedDate.localeCompare(b.lastmodifiedDate),
+      priority: false,
+    },
+  ];
+
+  listOfData: IGetAllHistoryRes[] = [
+    {
+      device: 'esp1',
+      action: 'on',
+      createdDate: '',
+      lastmodifiedDate: '',
+    },
+    {
+      device: 'isp1',
+      action: 'tat',
+      createdDate: '',
+      lastmodifiedDate: '',
+    },
+    {
+      device: 'isp1',
+      action: 'tat',
+      createdDate: '',
+      lastmodifiedDate: '',
+    },
+    {
+      device: 'isp1',
+      action: 'tat',
+      createdDate: '',
+      lastmodifiedDate: '',
+    },
+    {
+      device: 'isp1',
+      action: 'tat',
+      createdDate: '',
+      lastmodifiedDate: '',
+    },
+    {
+      device: 'isp1',
+      action: 'tat',
+      createdDate: '',
+      lastmodifiedDate: '',
+    },
+    {
+      device: 'isp1',
+      action: 'tat',
+      createdDate: '',
+      lastmodifiedDate: '',
+    },
+    {
+      device: 'isp1',
+      action: 'tat',
+      createdDate: '',
+      lastmodifiedDate: '',
+    },
+    {
+      device: 'isp1',
+      action: 'tat',
+      createdDate: '',
+      lastmodifiedDate: '',
+    },
+    {
+      device: 'isp1',
+      action: 'tat',
+      createdDate: '',
+      lastmodifiedDate: '',
+    },
+    {
+      device: 'isp1',
+      action: 'tat',
+      createdDate: '',
+      lastmodifiedDate: '',
+    },
+    {
+      device: 'isp1',
+      action: 'tat',
+      createdDate: '',
+      lastmodifiedDate: '',
+    },
+    {
+      device: 'isp1',
+      action: 'tat',
+      createdDate: '',
+      lastmodifiedDate: '',
+    },
+    {
+      device: 'isp1',
+      action: 'tat',
+      createdDate: '',
+      lastmodifiedDate: '',
+    },
+    {
+      device: 'isp1',
+      action: 'tat',
+      createdDate: '',
+      lastmodifiedDate: '',
+    },
+    {
+      device: 'isp1',
+      action: 'tat',
+      createdDate: '',
+      lastmodifiedDate: '',
+    },{
+      device: 'isp1',
+      action: 'tat',
+      createdDate: '',
+      lastmodifiedDate: '',
+    },{
+      device: 'isp1',
+      action: 'tat',
+      createdDate: '',
+      lastmodifiedDate: '',
+    },{
+      device: 'isp1',
+      action: 'tat',
+      createdDate: '',
+      lastmodifiedDate: '',
+    },{
+      device: 'isp1',
+      action: 'tat',
+      createdDate: '',
+      lastmodifiedDate: '',
+    },{
+      device: 'isp1',
+      action: 'tat',
+      createdDate: '',
+      lastmodifiedDate: '',
+    },{
+      device: 'isp1',
+      action: 'tat',
+      createdDate: '',
+      lastmodifiedDate: '',
     },
   ];
 }

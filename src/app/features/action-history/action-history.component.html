@@ -1,4 +1,4 @@
-<section class="py-6 px-16">
+<!-- <<section class="py-6 px-16">
   <h1 class="font-bold text-xl mb-5">Lịch sử hoạt động</h1>
   <table style="width:100%">
     <tr>
@@ -16,4 +16,16 @@
     <div></div>
     <nz-pagination [nzPageIndex]="1" [nzTotal]="50"></nz-pagination>
   </div>
+</section> -->
+<section class="py-6 px-16">
+  <h1 class="font-bold text-xl mb-5">Lịch sử hoạt động</h1>
+  <app-sort-table [colTitle]="listOfColumn" [loaded]="true" [data]="listOfData" [total]="50" [pageSize]="10"
+    [pageIndex]="1">
+    <ng-template #rows let-row let-index="index">
+      <td>{{row.device}}</td>
+      <td>{{row.action}}</td>
+      <td>{{row.createdDate}}</td>
+      <td>{{row.lastmodifiedDate}}</td>
+    </ng-template>
+  </app-sort-table>
 </section>
