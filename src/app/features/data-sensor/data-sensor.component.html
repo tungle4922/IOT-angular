@@ -1,27 +1,14 @@
 <section class="py-6 px-16">
   <h1 class="font-bold text-xl mb-5">Data sensor</h1>
-  <table style="width:100%">
-    <tr>
-      <th>Id</th>
-      <th>Nhiệt độ (độ C)</th>
-      <th>Độ ẩm (%)</th>
-      <th>Ánh sáng (lux)</th>
-      <th>Trạng thái quạt</th>
-      <th>Trạng thái đèn</th>
-      <th>Thời gian</th>
-    </tr>
-    <tr *ngFor="let item of listData">
-      <td>{{item.id}}</td>
-      <td>{{item.temp}}</td>
-      <td>{{item.humidity}}</td>
-      <td>{{item.light}}</td>
-      <td>{{item.fanStatus}}</td>
-      <td>{{item.lightStatus}}</td>
-      <td>{{item.createdDate}}</td>
-    </tr>
-  </table>
-  <div class="mt-4 flex justify-end">
-    <div></div>
-    <nz-pagination [nzPageIndex]="1" [nzTotal]="50"></nz-pagination>
-  </div>
+  <app-sort-table [colTitle]="listOfColumn" [loaded]="isLoaded" [data]="data" [total]="totalCount" [pageSize]="10"
+    [pageIndex]="1">
+    <ng-template #rows let-row let-index="index">
+      <td>{{row.id}}</td>
+      <td>{{row.temperature}}</td>
+      <td>{{row.humidity}}</td>
+      <td>{{row.light}}</td>
+      <td>{{row.createdDate | date : 'dd/MM/yyyy hh:mm:ss a'}}</td>
+      <td>{{row.lastModifiedDate | date : 'dd/MM/yyyy hh:mm:ss a'}}</td>
+    </ng-template>
+  </app-sort-table>
 </section>

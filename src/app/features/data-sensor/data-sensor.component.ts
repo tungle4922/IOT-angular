@@ -1,71 +1,83 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { NzPaginationModule } from 'ng-zorro-antd/pagination';
-
+import { SortTableComponent } from '../../shared/components/sort-table/sort-table.component';
+import { IColumnSort } from '../../core/models/SortTable';
+import { DataSensorService } from '../../core/apis/DataSensor.service';
+import { IGetAllDataSensorReq, IGetAllDataSensorRes } from '../../core/models/DataSensor';
 
 @Component({
   selector: 'app-data-sensor',
   standalone: true,
-  imports: [CommonModule, RouterModule, NzPaginationModule],
+  imports: [CommonModule, RouterModule, NzPaginationModule, SortTableComponent],
   templateUrl: './data-sensor.component.html',
   styleUrls: ['./data-sensor.component.scss'],
 })
 export class DataSensorComponent {
-  public listData = [
+  listOfColumn: IColumnSort[] = [
     {
-      id: 1,
-      temp: 20,
-      humidity: 50,
-      light: 100,
-      fanStatus: 'On',
-      lightStatus: 'Off',
-      createdDate: '16/09/2024'
+      title: 'Id',
+      compare: (a: IGetAllDataSensorRes, b: IGetAllDataSensorRes) =>
+        a.id - b.id,
+      priority: false,
     },
     {
-      id: 2,
-      temp: 24,
-      humidity: 54,
-      light: 110,
-      fanStatus: 'On',
-      lightStatus: 'Off',
-      createdDate: '16/09/2024'
+      title: 'Nhiệt độ',
+      compare: (a: IGetAllDataSensorRes, b: IGetAllDataSensorRes) =>
+        a.temperature - b.temperature,
+      priority: false,
     },
     {
-      id: 3,
-      temp: 25,
-      humidity: 51,
-      light: 101,
-      fanStatus: 'On',
-      lightStatus: 'Off',
-      createdDate: '16/09/2024'
+      title: 'Độ ẩm',
+      compare: (a: IGetAllDataSensorRes, b: IGetAllDataSensorRes) =>
+        a.humidity - b.humidity,
+      priority: false,
     },
     {
-      id: 4,
-      temp: 20,
-      humidity: 50,
-      light: 100,
-      fanStatus: 'On',
-      lightStatus: 'Off',
-      createdDate: '16/09/2024'
+      title: 'Ánh sáng',
+      compare: (a: IGetAllDataSensorRes, b: IGetAllDataSensorRes) =>
+        a.light - b.light,
+      priority: false,
     },
     {
-      id: 4,
-      temp: 24,
-      humidity: 50,
-      light: 100,
-      fanStatus: 'On',
-      lightStatus: 'Off',
-      createdDate: '16/09/2024'
+      title: 'Ngày tạo',
+      compare: (a: IGetAllDataSensorRes, b: IGetAllDataSensorRes) =>
+        a.createdDate.localeCompare(b.createdDate),
+      priority: false,
     },
     {
-      id: 5,
-      temp: 20,
-      humidity: 51,
-      light: 100,
-      fanStatus: 'On',
-      lightStatus: 'Off',
-      createdDate: '16/09/2024'
+      title: 'Ngày cập nhật',
+      compare: (a: IGetAllDataSensorRes, b: IGetAllDataSensorRes) =>
+        a.lastModifiedDate.localeCompare(b.lastModifiedDate),
+      priority: false,
     },
   ];
+
+  public data: IGetAllDataSensorRes[] = [];
+  public isLoaded: boolean = true;
+  public totalCount!: number;
+
+  constructor(
+    private dataSensorService: DataSensorService,
+    private cdr: ChangeDetectorRef
+  ) {}
+
+  ngOnInit() {
+    this.getAllDataSensor();
+  }
+
+  getAllDataSensor() {
+    this.isLoaded = false;
+    const body: IGetAllDataSensorReq = {
+      page: 1,
+      pageSize: 10,
+    };
+    this.dataSensorService.getAllDataSensor(body).subscribe((data) => {
+      this.data = data.data;
+      this.totalCount = data.totalCount;
+      this.isLoaded = true;
+      this.cdr.detectChanges();
+    });
+  }
 }
