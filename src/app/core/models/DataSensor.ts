@@ -8,10 +8,15 @@ export interface IGetAllDataSensorRes {
 }
 
 export interface IGetAllDataSensorReq {
-  page?: number;
-  pageSize?: number;
+  page: number;
+  pageSize: number;
+  temperature?: number;
+  humidity?: number;
+  light?: number;
+  createdDate?: string;
+  lastModifiedDate?: string;
   type?: IType;
-  search?: number | string;
+  search?: any;
 }
 
 export interface IType {

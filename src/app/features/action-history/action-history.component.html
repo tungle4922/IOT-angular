@@ -1,12 +1,36 @@
 <section class="py-6 px-16">
   <h1 class="font-bold text-xl mb-5">Lịch sử hoạt động</h1>
-  <app-sort-table [colTitle]="listOfColumn" [loaded]="true" [data]="listOfData" [total]="50" [pageSize]="10"
-    [pageIndex]="1">
+  <form [formGroup]="form">
+    <div class="grid grid-cols-4 items-center gap-x-10 gap-y-4">
+      <div>
+        <p class="ml-2 mb-2">Tên thiết bị</p>
+        <input formControlName="device" nz-input type="text" placeholder="Tên thiết bị">
+      </div>
+      <div>
+        <p class="ml-2 mb-2">Hàng động</p>
+        <input formControlName="action" nz-input type="text" placeholder="Hành động">
+      </div>
+      <div>
+        <p class="ml-2 mb-2">Ngày tạo</p>
+        <nz-date-picker class="!w-full" formControlName="createdDate" nzPlaceHolder="Ngày tạo"></nz-date-picker>
+      </div>
+    </div>
+    <div class="float-right my-6">
+      <div class="flex items-center">
+        <button (click)="cancel()" nz-button nzType="default" class="mr-3">Hủy</button>
+        <button (click)="searh()" nz-button nzType="primary">Tìm kiếm</button>
+      </div>
+    </div>
+  </form>
+  <app-sort-table [colTitle]="listOfColumn" [loaded]="true" [data]="data" [total]="totalCount"
+    [pageSize]="form.get('pageSize')?.value!" [pageIndex]="form.get('page')?.value!"
+    (pageIndexChange)="changePage($event)" (pageSizeChange)="changePageSize($event)">
     <ng-template #rows let-row let-index="index">
+      <td>{{row.id}}</td>
       <td>{{row.device}}</td>
       <td>{{row.action}}</td>
-      <td>{{row.createdDate}}</td>
-      <td>{{row.lastModifiedDate}}</td>
+      <td>{{row.createdDate | date : 'dd/MM/yyyy hh:mm:ss a'}}</td>
+      <td>{{row.lastModifiedDate | date : 'dd/MM/yyyy hh:mm:ss a'}}</td>
     </ng-template>
   </app-sort-table>
 </section>

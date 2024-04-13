@@ -1,9 +1,14 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { NzDropDownModule } from 'ng-zorro-antd/dropdown';
 import { Chart } from 'chart.js';
 import { NgChartsModule } from 'ng2-charts';
 import { NzButtonModule } from 'ng-zorro-antd/button';
+import { DataSensorService } from '../../core/apis/DataSensor.service';
+import {
+  IGetAllDataSensorReq,
+  IGetAllDataSensorRes,
+} from '../../core/models/DataSensor';
 
 @Component({
   selector: 'app-dashboard',
@@ -16,31 +21,71 @@ export class DashboardComponent {
   public chart: any;
   public isFanOn: boolean = false;
   public isLightOn: boolean = false;
-  public temperature: number = 20;
+  public newestData!: IGetAllDataSensorRes;
+  public dateArr: string[] = [];
+  public tempArr: number[] = [];
+  public humpArr: number[] = [];
+  public lightArr: number[] = [];
+
+  constructor(
+    private dataSensorService: DataSensorService,
+    private cdr: ChangeDetectorRef
+  ) {}
 
   ngOnInit() {
-    this.createLineChart(['1000', '2000', '3000'], [400, 500, 600]);
+    this.getAllDataSensor();
+    this.createLineChart();
+    setInterval(() => {
+      this.getAllDataSensor();
+    }, 3000);
   }
 
-  createLineChart(labelArray: any, quantityArray: any) {
+  getAllDataSensor() {
+    const body: IGetAllDataSensorReq = {
+      page: 1,
+      pageSize: 99999,
+    };
+    this.dataSensorService.getAllDataSensor(body).subscribe((data) => {
+      const reserveData: IGetAllDataSensorRes[] = data.data.reverse();
+      this.newestData = reserveData[0];
+      this.dateArr = [];
+      this.tempArr = [];
+      this.humpArr = [];
+      this.lightArr = [];
+      reserveData.forEach((item) => {
+        this.dateArr.push(item.createdDate);
+        this.tempArr.push(item.temperature);
+        this.humpArr.push(item.humidity);
+        this.lightArr.push(item.light);
+      });
+      this.chart.data.labels = this.dateArr;
+      this.chart.data.datasets[0].data = this.tempArr;
+      this.chart.data.datasets[1].data = this.humpArr;
+      this.chart.data.datasets[2].data = this.lightArr;
+      this.chart.update();
+      this.cdr.detectChanges();
+    });
+  }
+
+  createLineChart() {
     this.chart = new Chart('lineChart', {
       type: 'line',
       data: {
-        labels: [10, 20, 30, 40, 50, 60],
+        labels: this.dateArr,
         datasets: [
           {
-            label: 'Nhiệt độ',
-            data: [40, 35, 38, 32, 35, 40],
+            label: 'Nhiệt độ (°C)',
+            data: this.tempArr,
             fill: false,
           },
           {
-            label: 'Độ ẩm',
-            data: [40, 42, 45, 46, 51, 53],
+            label: 'Độ ẩm (%)',
+            data: this.humpArr,
             fill: false,
           },
           {
-            label: 'Ánh sáng',
-            data: [69, 50, 60, 40, 50, 70],
+            label: 'Ánh sáng (lux)',
+            data: this.lightArr,
             fill: false,
           },
         ],
@@ -49,6 +94,7 @@ export class DashboardComponent {
         responsive: true,
       },
     });
+    this.chart.update();
   }
 
   toggleFan() {

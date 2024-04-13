@@ -5,12 +5,34 @@ import { NzPaginationModule } from 'ng-zorro-antd/pagination';
 import { SortTableComponent } from '../../shared/components/sort-table/sort-table.component';
 import { IColumnSort } from '../../core/models/SortTable';
 import { DataSensorService } from '../../core/apis/DataSensor.service';
-import { IGetAllDataSensorReq, IGetAllDataSensorRes } from '../../core/models/DataSensor';
+import {
+  IGetAllDataSensorReq,
+  IGetAllDataSensorRes,
+} from '../../core/models/DataSensor';
+import { NzInputModule } from 'ng-zorro-antd/input';
+import { NzDatePickerModule } from 'ng-zorro-antd/date-picker';
+import {
+  FormControl,
+  FormGroup,
+  FormsModule,
+  ReactiveFormsModule,
+} from '@angular/forms';
+import { NzButtonModule } from 'ng-zorro-antd/button';
 
 @Component({
   selector: 'app-data-sensor',
   standalone: true,
-  imports: [CommonModule, RouterModule, NzPaginationModule, SortTableComponent],
+  imports: [
+    CommonModule,
+    RouterModule,
+    NzPaginationModule,
+    SortTableComponent,
+    NzInputModule,
+    NzDatePickerModule,
+    FormsModule,
+    NzButtonModule,
+    ReactiveFormsModule,
+  ],
   templateUrl: './data-sensor.component.html',
   styleUrls: ['./data-sensor.component.scss'],
 })
@@ -57,6 +79,18 @@ export class DataSensorComponent {
   public data: IGetAllDataSensorRes[] = [];
   public isLoaded: boolean = true;
   public totalCount!: number;
+  public form = new FormGroup({
+    page: new FormControl(1),
+    pageSize: new FormControl(10),
+    type: new FormControl(undefined),
+    search: new FormControl(undefined),
+    temperature: new FormControl(undefined),
+    humidity: new FormControl(undefined),
+    light: new FormControl(undefined),
+    createdDate: new FormControl(undefined),
+    lastModifiedDate: new FormControl(undefined),
+  });
+  test!: string;
 
   constructor(
     private dataSensorService: DataSensorService,
@@ -69,15 +103,33 @@ export class DataSensorComponent {
 
   getAllDataSensor() {
     this.isLoaded = false;
-    const body: IGetAllDataSensorReq = {
-      page: 1,
-      pageSize: 10,
-    };
-    this.dataSensorService.getAllDataSensor(body).subscribe((data) => {
-      this.data = data.data;
-      this.totalCount = data.totalCount;
-      this.isLoaded = true;
-      this.cdr.detectChanges();
-    });
+    this.dataSensorService
+      .getAllDataSensor(this.form.getRawValue())
+      .subscribe((data) => {
+        this.data = data.data;
+        this.totalCount = data.totalCount;
+        this.isLoaded = true;
+        this.cdr.detectChanges();
+      });
+  }
+
+  changePage($event: any) {
+    this.form.patchValue({ page: $event });
+    this.getAllDataSensor();
+  }
+
+  changePageSize($event: any) {
+    this.form.patchValue({ pageSize: $event });
+    this.getAllDataSensor();
+  }
+
+  searh() {
+    this.getAllDataSensor();
+  }
+
+  cancel() {
+    this.form.reset();
+    this.form.patchValue({ page: 1, pageSize: 10 });
+    this.searh();
   }
 }
