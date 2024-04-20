@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+import { CommonModule, DatePipe } from '@angular/common';
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { NzDropDownModule } from 'ng-zorro-antd/dropdown';
 import { Chart } from 'chart.js';
@@ -9,11 +9,21 @@ import {
   IGetAllDataSensorReq,
   IGetAllDataSensorRes,
 } from '../../core/models/DataSensor';
+import { MqttService } from '../../core/apis/Mqtt.service';
+import { IPubReq } from '../../core/models/Mqtt';
+import { NotiService } from '../../services/noti.service';
+import { DateService } from '../../services/date.service';
 
 @Component({
   selector: 'app-dashboard',
   standalone: true,
-  imports: [CommonModule, NzDropDownModule, NgChartsModule, NzButtonModule],
+  imports: [
+    CommonModule,
+    NzDropDownModule,
+    NgChartsModule,
+    NzButtonModule,
+    DatePipe,
+  ],
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.scss'],
 })
@@ -29,7 +39,10 @@ export class DashboardComponent {
 
   constructor(
     private dataSensorService: DataSensorService,
-    private cdr: ChangeDetectorRef
+    private cdr: ChangeDetectorRef,
+    private mqttService: MqttService,
+    private notiService: NotiService,
+    private dateService: DateService
   ) {}
 
   ngOnInit() {
@@ -46,14 +59,13 @@ export class DashboardComponent {
       pageSize: 99999,
     };
     this.dataSensorService.getAllDataSensor(body).subscribe((data) => {
-      const reserveData: IGetAllDataSensorRes[] = data.data.reverse();
-      this.newestData = reserveData[0];
+      this.newestData = data.data[0];
       this.dateArr = [];
       this.tempArr = [];
       this.humpArr = [];
       this.lightArr = [];
-      reserveData.forEach((item) => {
-        this.dateArr.push(item.createdDate);
+      data.data?.slice(0, 20).forEach((item: IGetAllDataSensorRes) => {
+        this.dateArr.push(this.dateService.formatDate(item.createdDate));
         this.tempArr.push(item.temperature);
         this.humpArr.push(item.humidity);
         this.lightArr.push(item.light);
@@ -102,6 +114,23 @@ export class DashboardComponent {
   }
 
   toggleLight() {
+    let body: IPubReq = {
+      topic: 'led/control',
+      message: '',
+    };
+    if (this.isLightOn === false) {
+      body.message = 'onBoth';
+    } else {
+      body.message = 'offBoth';
+    }
+    this.mqttService.publish(body).subscribe(
+      (data) => {
+        this.notiService.success();
+      },
+      (err) => {
+        this.notiService.error();
+      }
+    );
     this.isLightOn = !this.isLightOn;
   }
 }
