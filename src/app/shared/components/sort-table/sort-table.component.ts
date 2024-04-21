@@ -31,6 +31,6 @@ export class SortTableComponent {
   @ContentChild('rows') rows!: TemplateRef<any>;
 
   onPageSizeChange($event: number) {
-    this.pageSize = $event;
+    this.pageSizeChange.emit($event);
   }
 }
