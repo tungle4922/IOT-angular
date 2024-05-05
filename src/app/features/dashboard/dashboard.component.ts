@@ -28,6 +28,8 @@ import { DateService } from '../../services/date.service';
   styleUrls: ['./dashboard.component.scss'],
 })
 export class DashboardComponent {
+  public svgIcon: string =
+    'https://demo.bootstrapdash.com/purple-admin-free/assets/images/dashboard/circle.svg';
   public chart: any;
   public isFanOn: boolean = false;
   public isLightOn: boolean = false;

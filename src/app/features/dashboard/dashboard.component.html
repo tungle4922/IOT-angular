@@ -1,29 +1,32 @@
-<section class="py-6 px-12" [ngClass]="(newestData.temperature > 60 ? 'bg-red-600' : 'bg-[#f5f5f5]')">
+<section class="py-6 px-12" [ngClass]="(newestData.temperature > 60 ? 'bg-red-600' : 'bg-[#f2edf3]')">
   <div class="flex gap-6 mb-6">
-    <div class="shadow-xl border-[1px] bg-white border-[#f5f5f5] w-full p-6 h-[25vh]">
-      <div class="flex justify-end"><i class="fa-solid fa-temperature-high text-[30px] text-red-400"></i></div>
-      <p class="text-center text-lg font-semibold">{{newestData?.temperature}} độ C</p>
-      <p class="text-center text-xl font-semibold">Nhiệt độ</p>
+    <div class="shadow-xl bg-gradient-danger rounded-md w-full p-6 h-[25vh] relative">
+      <div class="flex justify-end"><i class="fa-solid fa-temperature-high text-[30px] text-white"></i></div>
+      <p class="text-center text-lg font-semibold text-white">{{newestData && newestData.temperature}} °C</p>
+      <p class="text-center text-xl font-medium text-white">Nhiệt độ</p>
+      <img class="absolute right-0 top-0 h-full" [src]="svgIcon" alt="">
     </div>
-    <div class="shadow-xl border-[1px] bg-white border-[#f5f5f5]  w-full p-6 h-[25vh]">
-      <div class="flex justify-end"><i class="fa-solid fa-cloud text-[30px] text-blue-400"></i></div>
-      <p class="text-center text-lg font-semibold">{{newestData?.humidity}} %</p>
-      <p class="text-center text-xl font-semibold">Độ ẩm</p>
+    <div class="shadow-xl bg-gradient-info rounded-md w-full p-6 h-[25vh] relative">
+      <div class="flex justify-end"><i class="fa-solid fa-cloud text-[30px] text-white"></i></div>
+      <p class="text-center text-lg font-semibold text-white">{{newestData && newestData.humidity}} %</p>
+      <p class="text-center text-xl font-medium text-white">Độ ẩm</p>
+      <img class="absolute right-0 top-0 h-full" [src]="svgIcon" alt="">
     </div>
-    <div class="shadow-xl border-[1px] bg-white border-[#f5f5f5]  w-full p-6 h-[25vh]">
-      <div class="flex justify-end"><i class="fa-regular fa-sun text-[30px] text-yellow-400"></i></div>
-      <p class="text-center text-lg font-semibold">{{newestData?.light}} lux</p>
-      <p class="text-center text-xl font-semibold">Ánh sáng</p>
+    <div class="shadow-xl bg-gradient-hot rounded-md w-full p-6 h-[25vh] relative">
+      <div class="flex justify-end"><i class="fa-regular fa-sun text-[30px] text-white"></i></div>
+      <p class="text-center text-lg font-semibold text-white">{{newestData && newestData.light}} lux</p>
+      <p class="text-center text-xl font-medium text-white">Ánh sáng</p>
+      <img class="absolute right-0 top-0 h-full" [src]="svgIcon" alt="">
     </div>
   </div>
   <div class="flex gap-6">
-    <div class="w-[68.5%] bg-white">
+    <div class="w-[68.5%] bg-white rounded-md">
       <div class="w-[85%] ml-[60px]">
         <canvas id="lineChart"></canvas>
       </div>
     </div>
     <div class="w-1/3 flex-col">
-      <div class="shadow-xl border-[1px] bg-white border-[#f5f5f5] w-full p-6 mb-6 h-[25vh]">
+      <div class="shadow-xl border-[1px] bg-white border-[#f5f5f5] w-full p-6 mb-6 h-[26vh] rounded-md">
         <img *ngIf="isFanOn === false" class="w-[70px] mx-auto mt-4"
           src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ_Pdn6Ueoc708MBYGQdy9bZY-kaRB98yXp7V8EZimx2ltgNs8J3M75J7aBcKVanjSgk54&usqp=CAU"
           alt="">
@@ -35,7 +38,7 @@
             class="px-7">Tắt</button>
         </div>
       </div>
-      <div class="shadow-xl border-[1px] bg-white border-[#f5f5f5] w-full p-6 h-[25vh]">
+      <div class="shadow-xl border-[1px] bg-white border-[#f5f5f5] w-full p-6 h-[26vh] rounded-md">
         <div *ngIf="isLightOn === false" class="flex justify-center"><i
             class="fa-solid fa-lightbulb text-[60px] mt-4"></i></div>
         <div *ngIf="isLightOn === true" class="flex justify-center"><i
