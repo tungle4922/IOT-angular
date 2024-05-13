@@ -68,12 +68,12 @@ export class DataSensorComponent {
         a.createdDate.localeCompare(b.createdDate),
       priority: false,
     },
-    {
-      title: 'Ngày cập nhật',
-      compare: (a: IGetAllDataSensorRes, b: IGetAllDataSensorRes) =>
-        a.lastModifiedDate.localeCompare(b.lastModifiedDate),
-      priority: false,
-    },
+    // {
+    //   title: 'Ngày cập nhật',
+    //   compare: (a: IGetAllDataSensorRes, b: IGetAllDataSensorRes) =>
+    //     a.lastModifiedDate.localeCompare(b.lastModifiedDate),
+    //   priority: false,
+    // },
   ];
 
   public data: IGetAllDataSensorRes[] = [];
@@ -90,7 +90,7 @@ export class DataSensorComponent {
     createdDate: new FormControl(undefined),
     lastModifiedDate: new FormControl(undefined),
   });
-  test!: string;
+  public isShow: boolean = false;
 
   constructor(
     private dataSensorService: DataSensorService,
@@ -99,6 +99,9 @@ export class DataSensorComponent {
 
   ngOnInit() {
     this.getAllDataSensor();
+    setInterval(() => {
+      this.getAllDataSensor();
+    }, 1000);
   }
 
   getAllDataSensor() {

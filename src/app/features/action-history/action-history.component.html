@@ -1,6 +1,6 @@
 <section class="py-6 px-16">
   <h1 class="font-bold text-xl mb-5">Lịch sử hoạt động</h1>
-  <form [formGroup]="form">
+  <form class="mb-8" [formGroup]="form">
     <div class="grid grid-cols-4 items-center gap-x-10 gap-y-4">
       <div>
         <p class="ml-2 mb-2">Tên thiết bị</p>
@@ -14,9 +14,7 @@
         <p class="ml-2 mb-2">Ngày tạo</p>
         <nz-date-picker class="!w-full" formControlName="createdDate" nzPlaceHolder="Ngày tạo"></nz-date-picker>
       </div>
-    </div>
-    <div class="float-right my-6">
-      <div class="flex items-center">
+      <div class="flex mt-7">
         <button (click)="cancel()" nz-button nzType="default" class="mr-3">Hủy</button>
         <button (click)="searh()" nz-button nzType="primary">Tìm kiếm</button>
       </div>
@@ -30,7 +28,7 @@
       <td>{{row.device}}</td>
       <td>{{row.action}}</td>
       <td>{{row.createdDate | date : 'dd/MM/yyyy hh:mm:ss a'}}</td>
-      <td>{{row.lastModifiedDate | date : 'dd/MM/yyyy hh:mm:ss a'}}</td>
+      <!-- <td>{{row.lastModifiedDate | date : 'dd/MM/yyyy hh:mm:ss a'}}</td> -->
     </ng-template>
   </app-sort-table>
 </section>

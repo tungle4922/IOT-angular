@@ -60,12 +60,12 @@ export class ActionHistoryComponent {
         a.createdDate.localeCompare(b.createdDate),
       priority: false,
     },
-    {
-      title: 'Ngày cập nhật',
-      compare: (a: IGetAllHistoryRes, b: IGetAllHistoryRes) =>
-        a.lastModifiedDate.localeCompare(b.lastModifiedDate),
-      priority: false,
-    },
+    // {
+    //   title: 'Ngày cập nhật',
+    //   compare: (a: IGetAllHistoryRes, b: IGetAllHistoryRes) =>
+    //     a.lastModifiedDate.localeCompare(b.lastModifiedDate),
+    //   priority: false,
+    // },
   ];
   public data: IGetAllHistoryRes[] = [];
   public isLoaded: boolean = true;
@@ -85,6 +85,9 @@ export class ActionHistoryComponent {
 
   ngOnInit() {
     this.getAllHistory();
+    setInterval(() => {
+      this.getAllHistory();
+    }, 1000);
   }
 
   getAllHistory() {

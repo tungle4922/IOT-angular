@@ -1,7 +1,7 @@
 <section class="py-6 px-16">
   <h1 class="font-bold text-xl mb-5">Data sensor</h1>
-  <form [formGroup]="form">
-    <div class="grid grid-cols-4 items-center gap-x-10 gap-y-4">
+  <form class="mb-8" [formGroup]="form">
+    <div class="grid grid-cols-5 items-center gap-x-10 gap-y-4">
       <div>
         <p class="ml-2 mb-2">Nhiệt độ (độ C)</p>
         <input formControlName="temperature" nz-input type="number" placeholder="Nhiệt độ">
@@ -18,15 +18,13 @@
         <p class="ml-2 mb-2">Ngày tạo</p>
         <nz-date-picker class="!w-full" formControlName="createdDate" nzPlaceHolder="Ngày tạo"></nz-date-picker>
       </div>
-    </div>
-    <div class="float-right my-6">
-      <div class="flex items-center">
+      <div class="flex mt-7">
         <button (click)="cancel()" nz-button nzType="default" class="mr-3">Hủy</button>
         <button (click)="searh()" nz-button nzType="primary">Tìm kiếm</button>
       </div>
     </div>
   </form>
-  <app-sort-table [colTitle]="listOfColumn" [loaded]="isLoaded" [data]="data" [total]="totalCount"
+  <app-sort-table [colTitle]="listOfColumn" [loaded]="true" [data]="data" [total]="totalCount"
     [pageSize]="form.get('pageSize')?.value!" [pageIndex]="form.get('page')?.value!"
     (pageIndexChange)="changePage($event)" (pageSizeChange)="changePageSize($event)">
     <ng-template #rows let-row let-index="index">
@@ -35,7 +33,7 @@
       <td>{{row.humidity}}</td>
       <td>{{row.light}}</td>
       <td>{{row.createdDate | date : 'dd/MM/yyyy hh:mm:ss a'}}</td>
-      <td>{{row.lastModifiedDate | date : 'dd/MM/yyyy hh:mm:ss a'}}</td>
+      <!-- <td>{{row.lastModifiedDate | date : 'dd/MM/yyyy hh:mm:ss a'}}</td> -->
     </ng-template>
   </app-sort-table>
 </section>
