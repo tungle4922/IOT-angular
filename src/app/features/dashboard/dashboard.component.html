@@ -12,7 +12,8 @@
       <p class="text-center text-xl font-medium text-white">Độ ẩm</p>
       <img class="absolute right-0 top-0 h-full" [src]="svgIcon" alt="">
     </div>
-    <div class="shadow-xl bg-gradient-hot rounded-md w-full p-6 h-[25vh] relative">
+    <div class="shadow-xl rounded-md w-full p-6 h-[25vh] relative"
+      [ngClass]="(newestData.light < 300 ? 'bg-gradient-hot-1' : newestData.light < 600 ? 'bg-gradient-hot' : 'bg-gradient-hot-2')">
       <div class="flex justify-end"><i class="fa-regular fa-sun text-[30px] text-white"></i></div>
       <p class="text-center text-lg font-semibold text-white">{{newestData && newestData.light}} lux</p>
       <p class="text-center text-xl font-medium text-white">Ánh sáng</p>

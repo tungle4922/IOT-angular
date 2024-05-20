@@ -12,4 +12,12 @@ export class ActionHistoryService {
   getAllHistory(body: any): Observable<any> {
     return this._http.post(this.endpoint, body);
   }
+
+  sortLowToHigh(body: any): Observable<any> {
+    return this._http.post(this.endpoint + '/sort/lowToHigh', body);
+  }
+
+  sortHighToLow(body: any): Observable<any> {
+    return this._http.post(this.endpoint + '/sort/highToLow', body);
+  }
 }

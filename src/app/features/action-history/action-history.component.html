@@ -3,16 +3,30 @@
   <form class="mb-8" [formGroup]="form">
     <div class="grid grid-cols-4 items-center gap-x-10 gap-y-4">
       <div>
+        <p class="ml-2 mb-2">Loại</p>
+        <nz-select class="!w-full" nzShowSearch nzPlaceHolder="Chọn loại search" formControlName="type">
+          <nz-option *ngFor="let item of listType" [nzLabel]="item.label" [nzValue]="item.value"></nz-option>
+        </nz-select>
+      </div>
+      <div *ngIf="form.get('type')?.value! === 'search'">
+        <p class="ml-2 mb-2">Search</p>
+        <input formControlName="search" nz-input placeholder="search">
+      </div>
+      <!-- <div>
         <p class="ml-2 mb-2">Tên thiết bị</p>
         <input formControlName="device" nz-input type="text" placeholder="Tên thiết bị">
-      </div>
-      <div>
+      </div> -->
+      <div *ngIf="form.get('type')?.value! === 'action'">
         <p class="ml-2 mb-2">Hàng động</p>
         <input formControlName="action" nz-input type="text" placeholder="Hành động">
       </div>
-      <div>
+      <div *ngIf="form.get('type')?.value! === 'createdDate'">
         <p class="ml-2 mb-2">Ngày tạo</p>
         <nz-date-picker class="!w-full" formControlName="createdDate" nzPlaceHolder="Ngày tạo"></nz-date-picker>
+      </div>
+      <div *ngIf="form.get('type')?.value! === 'id'">
+        <p class="ml-2 mb-2">Id</p>
+        <input formControlName="id" nz-input type="number" placeholder="id">
       </div>
       <div class="flex mt-7">
         <button (click)="cancel()" nz-button nzType="default" class="mr-3">Hủy</button>
@@ -20,12 +34,21 @@
       </div>
     </div>
   </form>
+  <div class="float-right mb-3">
+    <div class="flex items-center">
+      <span>Sấp xếp theo: </span>
+      <nz-select (ngModelChange)="sort()" class="!w-[200px] !ml-2" nzShowSearch nzPlaceHolder="Sắp xếp theo"
+        [(ngModel)]="fieldName">
+        <nz-option *ngFor="let item of listFields" [nzLabel]="item.label" [nzValue]="item.value"></nz-option>
+      </nz-select>
+    </div>
+  </div>
   <app-sort-table [colTitle]="listOfColumn" [loaded]="true" [data]="data" [total]="totalCount"
     [pageSize]="form.get('pageSize')?.value!" [pageIndex]="form.get('page')?.value!"
     (pageIndexChange)="changePage($event)" (pageSizeChange)="changePageSize($event)">
     <ng-template #rows let-row let-index="index">
       <td>{{row.id}}</td>
-      <td>{{row.device}}</td>
+      <!-- <td>{{row.device}}</td> -->
       <td>{{row.action}}</td>
       <td>{{row.createdDate | date : 'dd/MM/yyyy hh:mm:ss a'}}</td>
       <!-- <td>{{row.lastModifiedDate | date : 'dd/MM/yyyy hh:mm:ss a'}}</td> -->

@@ -16,4 +16,12 @@ export class DataSensorService {
   createDataSensor(body: any): Observable<any> {
     return this._http.post(this.endpoint + '/create', body);
   }
+
+  sortLowToHigh(body: any): Observable<any> {
+    return this._http.post(this.endpoint + '/sort/lowToHigh', body);
+  }
+
+  sortHighToLow(body: any): Observable<any> {
+    return this._http.post(this.endpoint + '/sort/highToLow', body);
+  }
 }

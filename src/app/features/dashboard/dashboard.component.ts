@@ -91,21 +91,54 @@ export class DashboardComponent {
             label: 'Nhiệt độ (°C)',
             data: this.tempArr,
             fill: false,
+            tension: 0.4,
+            yAxisID: 'y',
           },
           {
             label: 'Độ ẩm (%)',
             data: this.humpArr,
             fill: false,
+            tension: 0.4,
+            yAxisID: 'y',
           },
           {
             label: 'Ánh sáng (lux)',
             data: this.lightArr,
             fill: false,
+            tension: 0.4,
+            yAxisID: 'y1',
           },
         ],
       },
       options: {
         responsive: true,
+        interaction: {
+          mode: 'index',
+          intersect: false,
+        },
+        // plugins: {
+        //   title: {
+        //     display: true,
+        //     text: 'Chart.js Line Chart - Multi Axis',
+        //   },
+        // },
+        scales: {
+          y: {
+            type: 'linear',
+            display: true,
+            position: 'left',
+          },
+          y1: {
+            type: 'linear',
+            display: true,
+            position: 'right',
+
+            // grid line settings
+            grid: {
+              drawOnChartArea: false, // only want the grid lines for one axis to show up
+            },
+          },
+        },
       },
     });
     this.chart.update();
